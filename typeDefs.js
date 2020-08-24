@@ -31,7 +31,6 @@ type Comment {
 }
 
 type Query {
-
   me:User
 }
 
