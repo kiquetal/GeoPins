@@ -13,6 +13,12 @@ export default function reduce(state, action) {
         ...state,
         isAuth: action.payload
       }
+    case "SIGNOUNT_USER":
+      return {
+        ...state,
+        isAuth: false,
+        currentUser: null
+      }
     default:
       return state;
     

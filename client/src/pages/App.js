@@ -1,8 +1,8 @@
 import React from "react";
 import withRoot from "../withRoot";
-
-const App = () => {
-  return <div>App</div>;
+import Header from '../components/Header'
+const App = (props) => {
+  return <Header/>;
 };
 
 export default withRoot(App);

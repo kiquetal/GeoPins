@@ -3,5 +3,6 @@ export const ME_QUERY=`{
     _id
     name
     email
+    picture
   }
 }`;
