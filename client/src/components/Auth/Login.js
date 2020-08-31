@@ -8,8 +8,10 @@ import {Typography} from "@material-ui/core/es";
 
 import { ME_QUERY } from '../../graphql/queries';
 const Login = ({ classes }) => {
-  const {dispatch} = useContext(Context);
-  
+  const { dispatch } = useContext(Context);
+  const onFailure = (e)=>{
+    console.log("FAILURE"+JSON.stringify(e));
+  }
   const onSuccess = async googleUser => {
     const {id_token} = googleUser.getAuthResponse();
     
@@ -37,6 +39,7 @@ const Login = ({ classes }) => {
       <GoogleLogin
         buttonText="Ingresar con cuenta google"
         onSuccess={onSuccess}
+        onFailure={onFailure}
         isSignedIn={true}
         theme="dark"
         clientId="454433981322-q13aelbuh7kphv18qhfu2e9aidoec7vg.apps.googleusercontent.com"/>

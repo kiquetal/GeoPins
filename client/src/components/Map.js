@@ -1,9 +1,10 @@
-import React , { useState } from "react";
+import React , { useState, useEffect } from "react";
 import { withStyles } from "@material-ui/core/styles";
 // import Button from "@material-ui/core/Button";
 // import Typography from "@material-ui/core/Typography";
 // import DeleteIcon from "@material-ui/icons/DeleteTwoTone";
-import ReactMapGL, { NavigationControl} from 'react-map-gl';
+import ReactMapGL, { NavigationControl,Marker} from 'react-map-gl';
+import PinIcon from "./PinIcon";
 const INITIAL_STATE ={
   latitude:-25.30066,
   longitude:-57.63591,
@@ -11,6 +12,38 @@ const INITIAL_STATE ={
 }
 const Map = ({ classes }) => {
   const [ viewport, setViewPort] = useState(INITIAL_STATE);
+  const [ userPosition, setUserPosition ] = useState(null);
+  
+  
+  useEffect(()=>{
+    
+    getCurrentPosition();
+    
+  },[])
+  
+  const onClick= event =>{
+    console.log(event);
+  }
+  const getCurrentPosition=()=>{
+    
+    if ("geolocation" in navigator)
+    {
+
+      navigator.geolocation.getCurrentPosition((position)=>{
+        
+        const {latitude, longitude} = position.coords;
+        console.log("my current location");
+        console.log({latitude,longitude})
+        setViewPort({...viewport,latitude,longitude})
+        setUserPosition({latitude,longitude});
+      })
+    }
+    else
+    {
+      console.log("no navigator");
+    }
+    
+  }
   
   return (<div className={classes.root}>
     
@@ -23,10 +56,26 @@ const Map = ({ classes }) => {
       mapboxApiAccessToken="pk.eyJ1Ijoia2lxdWV0YWwiLCJhIjoiY2tlYW1mZWk3MDBhaDJycnNzMXJiNTZkaSJ9.E_r-OGMFxMRcpKNX8LtN3Q"
       onViewportChange={newViewPort => setViewPort(newViewPort)}
       {...viewport}
+      onClick={onClick}
     ><div className={classes.navigationControl}>
       <NavigationControl       onViewportChange={newViewPort => setViewPort(newViewPort)}
       />
     </div>
+      <div>
+        {           console.log("dibujar marker")}
+        { userPosition && (
+
+        <Marker
+        latitude={userPosition.latitude}
+        longitude={userPosition.longitude}
+        offsetLeft={-19}
+        offsetTop={-37}
+        >
+          <PinIcon size={40} color="red"></PinIcon>
+        </Marker>
+        
+        )}
+      </div>
     </ReactMapGL>
   </div>);
 };

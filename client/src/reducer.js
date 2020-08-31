@@ -1,3 +1,6 @@
+/*
+ remember the state from createContext.
+ */
 export default function reduce(state, action) {
   
   switch (action.type) {
