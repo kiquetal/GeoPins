@@ -1,6 +1,12 @@
 /*
  remember the state from createContext.
+
  */
+ /*
+  @startuml
+  
+  @enduml
+  */
 export default function reduce(state, action) {
   
   switch (action.type) {
@@ -39,6 +45,14 @@ export default function reduce(state, action) {
         draft: action.payload
       }
     }
+    
+    case "DELETE_DRAFT":{
+      return {
+        ...state,
+        draft: null
+      }
+    }
+    
     default:
       return state;
     

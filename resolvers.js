@@ -25,12 +25,14 @@ module.exports = {
   },
   Mutation: {
     
-    createPin:async (root, args, ctx, info) => {
-      await new Pin({
-      ...args.input,
-      
-      });
-    }
+    createPin:authenticated(async (root, args, ctx, info) => {
+      const newPin = await new Pin({
+        ...args.input,
+        author: ctx.currentUser._id
+      }).save();
+      const pinAdded = await Pin.populate(newPin, 'author');
+      return pinAdded;
+    })
     
   }
   

@@ -6,6 +6,7 @@ import { withStyles } from "@material-ui/core/styles";
 import ReactMapGL, { NavigationControl,Marker} from 'react-map-gl';
 import PinIcon from "./PinIcon";
 import Context  from '../context';
+import Blog from "./Blog";
 const INITIAL_STATE ={
   latitude:-25.30066,
   longitude:-57.63591,
@@ -89,6 +90,7 @@ const Map = ({ classes }) => {
         )}
         
       </ReactMapGL>
+      <Blog/>
       
       
     </div>
