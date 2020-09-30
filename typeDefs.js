@@ -40,7 +40,9 @@ type Comment {
 }
 
 type Query {
-  me:User
+  me:User,
+  getPins:[Pin!]
+  
 }
 type Mutation {
   createPin(input: CreatePinInput!):Pin

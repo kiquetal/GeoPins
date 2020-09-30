@@ -11,12 +11,12 @@ import Typography from "@material-ui/core/Typography";
  import SaveIcon from "@material-ui/icons/SaveTwoTone";
 import Context from '../../context';
 import axios from 'axios';
-
+import { useClient} from "../../client";
 import { CREATE_PIN_MUTATION } from "../../graphql/mutations";
 
 const CreatePin = ({ classes }) => {
   
-  
+  const client =useClient();
   const { dispatch , state } = useContext(Context);
   
   const [title, setTitle] = useState("");
@@ -49,10 +49,7 @@ const CreatePin = ({ classes }) => {
     setSubmitting(true);
 
     try {
-      const idToken =window.gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().id_token;
-      const clientGQ = new GraphQLClient("http://localhost:4000/graphql",{
-        headers : { authorization: idToken}
-      });
+
       const { latitude, longitude }= state.draft;
       const url =await handleImageUpload();
   
@@ -60,9 +57,10 @@ const CreatePin = ({ classes }) => {
         title,
         image: url,
         latitude,
-        longitude
+        longitude,
+        content
       }
-      const { createPin } = await clientGQ.request(CREATE_PIN_MUTATION,variables);
+      const { createPin } = await client.request(CREATE_PIN_MUTATION,variables);
       console.log({createPin});
   
     }
