@@ -45,7 +45,13 @@ export default function reduce(state, action) {
         draft: action.payload
       }
     }
-    
+    case "GET_PINS":{
+      console.log("recibido" + JSON.stringify(action.payload));
+      return {
+        ...state,
+        pins:action.payload
+      }
+    }
     case "DELETE_DRAFT":{
       return {
         ...state,

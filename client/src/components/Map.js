@@ -7,20 +7,36 @@ import ReactMapGL, { NavigationControl,Marker} from 'react-map-gl';
 import PinIcon from "./PinIcon";
 import Context  from '../context';
 import Blog from "./Blog";
+import { useClient } from "../client"
+import { GET_PINS } from "../graphql/queries";
+
 const INITIAL_STATE ={
   latitude:-25.30066,
   longitude:-57.63591,
   zoom:15
-}
+};
 
 const Map = ({ classes }) => {
-
+  useEffect( ()=>{
+    getPins();
+    
+  },[])
+  
+  const client = useClient();
   const { state, dispatch } = useContext(Context);
   const [viewport, setViewport] = useState(INITIAL_STATE);
   const [userPosition, setUserPosition] = useState(null);
   useEffect(() => {
     getUserPosition();
   }, []);
+  
+ 
+  const getPins = async ()=>{
+    
+    const { getPins } = await client.request(GET_PINS);
+    dispatch({type:"GET_PINS",payload:getPins})
+    
+  }
   
   const getUserPosition = () => {
     if ('geolocation' in navigator) {
@@ -88,7 +104,19 @@ const Map = ({ classes }) => {
             <PinIcon size={40} color="hotpink" />
           </Marker>
         )}
+        {state.pins &&  state.pins.map(pin=>{
+          return(<Marker
+            key={pin._id}
+            latitude={pin.latitude}
+            longitude={pin.longitude}
+            offsetLeft={-19}
+            offsetTop={-37}
+          >
+            <PinIcon size={40} color="black" />
+          </Marker>)
         
+        
+        })};
       </ReactMapGL>
       <Blog/>
       

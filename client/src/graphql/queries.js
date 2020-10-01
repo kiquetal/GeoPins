@@ -1,4 +1,4 @@
-export const ME_QUERY=`{
+export const ME_QUERY = `{
   me {
     _id
     name
@@ -6,3 +6,13 @@ export const ME_QUERY=`{
     picture
   }
 }`;
+export const GET_PINS = `
+{
+  getPins {
+  _id
+  title
+  latitude
+  longitude
+  }
+  
+  }`;

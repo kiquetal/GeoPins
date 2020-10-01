@@ -23,7 +23,7 @@ module.exports = {
       return ctx.currentUser
     }),
     getPins: async  (root,args,ctx)=>{
-      await Pin.find({}).populate('author').populate('comments.author')
+      const pins =await Pin.find({}).populate('author').populate('comments.author');
       return pins;
     }
   },
